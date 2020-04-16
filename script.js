@@ -14,15 +14,28 @@ window.addEventListener('load',function(){
       let copilotStatus = document.getElementById("copilotStatus");
       let fuelStatus = document.getElementById("fuelStatus");
       let cargoStatus = document.getElementById("cargoStatus");
-      if(pilotName.value === ""){
-         alert("All fields required.");
-      } else if(coPilotName.value === ""){
-         alert("All fields required.");
-      } else if(isNaN(fuelLevel.value) || fuelLevel.value === ""){
-         alert("All fields required.");
-      } else if(isNaN(cargoMass.value) || cargoMass.value === ""){
-         alert("All fields required.");
-      } else {}
+      let validation = [pilotName.value,coPilotName.value,fuelLevel.value,cargoMass.value]
+      for(let i=0; i < validation.length; i++){
+         if(validation[i] === ""){
+            alert("All fields required.");
+            break;
+         }
+      }
+      if(isNaN(validation[2]) || isNaN(validation[3])) {
+         alert("Make sure to enter valid information for each field.");
+      }
+      if(validation[0] !== String || validation[1] !== String){
+         alert("Make sure to enter valid information for each field.");
+      }
+      // if(pilotName.value === ""){
+      //    alert("All fields required.");
+      // } else if(coPilotName.value === ""){
+      //    alert("All fields required.");
+      // } else if(isNaN(fuelLevel.value) || fuelLevel.value === ""){
+      //    alert("All fields required.");
+      // } else if(isNaN(cargoMass.value) || cargoMass.value === ""){
+      //    alert("All fields required.");
+      // } else {}
 
       fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
          response.json().then(function(json) {
@@ -70,7 +83,10 @@ window.addEventListener('load',function(){
          faultyItems.style.visibility = "visible";
          pilotStatus.innerHTML = `Pilot ${pilotName.value} is ready for launch.`;
          copilotStatus.innerHTML = `Co-Pilot ${coPilotName.value} is for launch.`;
-      } else{}
+      } else{
+         launchStatus.innerHTML = "Awaiting Information Before Launch";
+         faultyItems.style.visibility = "hidden";
+      }
 
    })
 });
